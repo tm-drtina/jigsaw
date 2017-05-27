@@ -1,0 +1,52 @@
+@import "~bootswatch/paper/variables";
+@import "bootstrap_custom";
+@import "~bootswatch/paper/bootswatch";
+
+$fa-font-path: "~font-awesome/fonts";
+
+@import "~font-awesome/scss/font-awesome";
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  // background-color: #f7f7f7;
+  height: 100%;
+}
+
+#loading {
+  z-index: 1900;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(128, 128, 128, 0.1);
+  top: 0;
+  left: 0;
+  cursor: wait;
+
+  & > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+#board {
+  width: 500px;
+  height: 500px;
+  background: rgba(0, 255, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+#board > div {
+  position: absolute;
+}
+
+#board > div > svg {
+  height: 66px;
+  width: 66px;
+}
