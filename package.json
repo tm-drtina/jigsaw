@@ -17,7 +17,7 @@
     "lint:css": "stylelint \"src/scss/*.scss\"",
     "lint": "npm run lint:js & npm run lint:css",
     "test": "npm run jest & npm run lint",
-    "version": "node update-version.js && npm run production",
+    "version": "node update-version.js && npm run production && git add dist/*",
     "postversion": "git subtree push --prefix dist origin gh-pages"
   },
   "author": "Tomas Drtina <drtinto1@fel.cvut.cz>",
