@@ -169,6 +169,8 @@ class Jigsaw extends React.Component {
                                    A 8 8 0 1 1 50 30
                                    L 50 50
                                    L 30 50
+                                   A 8 8 0 1 1 20 50
+                                   L 0 50
                                    L 0 0"
                                 stroke="red"
                                 strokeWidth="3"
