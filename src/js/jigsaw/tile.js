@@ -9,11 +9,7 @@ export default class Tile {
 
         const svgEl = document.createElementNS(svgNS, 'svg');
         svgEl.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink');
-        svgEl.setAttribute('clip-path', `url(#tile${top ? '-top' : ''}${bot ? '-bot' : ''}${left ? '-left' : ''}${right ? '-right' : ''})`);
         this.container.el.appendChild(svgEl);
-
-        svgEl.addEventListener('mousedown', e => board.startDrag.call(board, e, this.container));
-        svgEl.addEventListener('mouseup', e => board.cancelDrag.call(board, e, this.container));
 
         const rectEl = document.createElementNS(svgNS, 'rect');
         rectEl.setAttribute('x', `-${x}`);
@@ -21,6 +17,10 @@ export default class Tile {
         rectEl.setAttribute('height', height);
         rectEl.setAttribute('width', width);
         rectEl.setAttribute('fill', 'url(#img1)');
+        rectEl.setAttribute('clip-path', `url(#tile${top ? '-top' : ''}${bot ? '-bot' : ''}${left ? '-left' : ''}${right ? '-right' : ''})`);
+        rectEl.style.pointerEvents = 'auto';
+        rectEl.addEventListener('mousedown', e => board.startDrag.call(board, e, this.container));
+        rectEl.addEventListener('mouseup', e => board.cancelDrag.call(board, e, this.container));
         svgEl.appendChild(rectEl);
 
         const pathEl = document.createElementNS(svgNS, 'use');

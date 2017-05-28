@@ -7,6 +7,7 @@ export default class Container {
         this.el = document.createElement('div');
         this.el.style.top = `${y + offsetTop}px`;
         this.el.style.left = `${x + offsetLeft}px`;
+        this.el.style.pointerEvents = 'none';
         this.board.el.appendChild(this.el);
     }
 }
