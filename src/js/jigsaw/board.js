@@ -14,6 +14,7 @@ export default class Board {
         this.prevLeft = 0;
         this.startX = 0;
         this.startY = 0;
+        this.zIndexMax = 0;
     }
 
     generateTiles() {
@@ -46,6 +47,10 @@ export default class Board {
         this.startY = e.clientY;
         this.prevTop = parseInt(this.dragTarget.el.style.top, 10);
         this.prevLeft = parseInt(this.dragTarget.el.style.left, 10);
+        if (this.zIndexMax === 0 || this.dragTarget.el.style.zIndex < this.zIndexMax) {
+            this.zIndexMax += 1;
+            this.dragTarget.el.style.zIndex = this.zIndexMax;
+        }
         this.el.addEventListener('mousemove', this.handleMousemove);
         document.body.addEventListener('mouseleave', this.cancelDrag);
     };
