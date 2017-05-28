@@ -41,7 +41,7 @@ class Jigsaw extends React.Component {
                                    A 8 8 0 1 0 0 20
                                    L 0 0"
                                 stroke="red"
-                                strokeWidth="3"
+                                strokeWidth="1"
                                 strokeDasharray="1, 2"
                                 id="tile-path"
                                 fill="transparent"
@@ -61,7 +61,7 @@ class Jigsaw extends React.Component {
                                    A 8 8 0 1 0 0 20
                                    L 0 0"
                                 stroke="red"
-                                strokeWidth="3"
+                                strokeWidth="1"
                                 strokeDasharray="1, 2"
                                 id="tile-path-top"
                                 fill="transparent"
@@ -79,7 +79,7 @@ class Jigsaw extends React.Component {
                                    L 0 50
                                    L 0 0"
                                 stroke="red"
-                                strokeWidth="3"
+                                strokeWidth="1"
                                 strokeDasharray="1, 2"
                                 id="tile-path-top-left"
                                 fill="transparent"
@@ -97,7 +97,7 @@ class Jigsaw extends React.Component {
                                    A 8 8 0 1 0 0 20
                                    L 0 0"
                                 stroke="red"
-                                strokeWidth="3"
+                                strokeWidth="1"
                                 strokeDasharray="1, 2"
                                 id="tile-path-top-right"
                                 fill="transparent"
@@ -117,7 +117,7 @@ class Jigsaw extends React.Component {
                                    A 8 8 0 1 0 0 20
                                    L 0 0"
                                 stroke="red"
-                                strokeWidth="3"
+                                strokeWidth="1"
                                 strokeDasharray="1, 2"
                                 id="tile-path-bot"
                                 fill="transparent"
@@ -135,7 +135,7 @@ class Jigsaw extends React.Component {
                                    L 0 50
                                    L 0 0"
                                 stroke="red"
-                                strokeWidth="3"
+                                strokeWidth="1"
                                 strokeDasharray="1, 2"
                                 id="tile-path-bot-left"
                                 fill="transparent"
@@ -153,7 +153,7 @@ class Jigsaw extends React.Component {
                                    A 8 8 0 1 0 0 20
                                    L 0 0"
                                 stroke="red"
-                                strokeWidth="3"
+                                strokeWidth="1"
                                 strokeDasharray="1, 2"
                                 id="tile-path-bot-right"
                                 fill="transparent"
@@ -173,7 +173,7 @@ class Jigsaw extends React.Component {
                                    L 0 50
                                    L 0 0"
                                 stroke="red"
-                                strokeWidth="3"
+                                strokeWidth="1"
                                 strokeDasharray="1, 2"
                                 id="tile-path-left"
                                 fill="transparent"
@@ -193,7 +193,7 @@ class Jigsaw extends React.Component {
                                    A 8 8 0 1 0 0 20
                                    L 0 0"
                                 stroke="red"
-                                strokeWidth="3"
+                                strokeWidth="1"
                                 strokeDasharray="1, 2"
                                 id="tile-path-right"
                                 fill="transparent"
