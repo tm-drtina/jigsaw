@@ -6,6 +6,7 @@ export default class Container {
         this.tiles = tiles;
         this.row = row;
         this.col = col;
+        this.deleted = false;
         this.el = document.createElement('div');
         this.el.style.pointerEvents = 'none';
         this.setPos(initTop, initLeft);
@@ -17,5 +18,11 @@ export default class Container {
         this.left = left;
         this.el.style.top = `${top}px`;
         this.el.style.left = `${left}px`;
+    }
+
+    remove() {
+        if (this.deleted) return;
+        this.board.el.removeChild(this.el);
+        this.deleted = true;
     }
 }

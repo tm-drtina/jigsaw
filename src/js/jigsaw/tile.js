@@ -17,11 +17,22 @@ export default class Tile {
 
         this.svgEl = document.createElementNS(svgNS, 'svg');
         this.svgEl.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink');
+        this.svgEl.setAttribute('height', `${this.board.tileHeight}`);
+        this.svgEl.setAttribute('width', `${this.board.tileWidth}`);
+        this.svgEl.setAttribute('viewBox', `0 0 ${this.board.tileWidthTotal} ${this.board.tileHeightTotal}`);
         this.svgEl.style.position = 'absolute';
 
+        this.backgroundFill = document.createElementNS(svgNS, 'rect');
+        this.backgroundFill.setAttribute('height', '100');
+        this.backgroundFill.setAttribute('width', '100');
+        this.backgroundFill.setAttribute('fill', 'black');
+        this.backgroundFill.setAttribute('clip-path', `url(#tile${this.top ? '-top' : ''}${this.bot ? '-bot' : ''}${this.left ? '-left' : ''}${this.right ? '-right' : ''})`);
+        this.backgroundFill.style.pointerEvents = 'auto';
+        this.svgEl.appendChild(this.backgroundFill);
+
         this.rectEl = document.createElementNS(svgNS, 'rect');
-        this.rectEl.setAttribute('x', `-${col * this.board.tileWidth}`);
-        this.rectEl.setAttribute('y', `-${row * this.board.tileHeight}`);
+        this.rectEl.setAttribute('x', `${-(col * this.board.tileWidth) + this.board.leftOffset}`);
+        this.rectEl.setAttribute('y', `${-(row * this.board.tileHeight) + this.board.topOffset}`);
         this.rectEl.setAttribute('height', this.board.height);
         this.rectEl.setAttribute('width', this.board.width);
         this.rectEl.setAttribute('fill', 'url(#img1)');
@@ -44,11 +55,8 @@ export default class Tile {
         this.svgEl.style.left = `${this.containerLeftOffset}px`;
         this.container.el.appendChild(this.svgEl);
         this.rectEl.removeEventListener('mousedown', this.handleMousedown);
-        this.rectEl.removeEventListener('mouseup', this.handleMouseup);
         this.handleMousedown = e => this.board.startDrag.call(this.board, e, this.container);
-        this.handleMouseup = e => this.board.cancelDrag.call(this.board, e, this.container);
         this.rectEl.addEventListener('mousedown', this.handleMousedown);
-        this.rectEl.addEventListener('mouseup', this.handleMouseup);
     }
 
     getCoords() {

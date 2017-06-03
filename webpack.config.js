@@ -72,7 +72,7 @@ if (process.env.NODE_ENV !== 'production') {
     finalConfig = Object.assign({}, config, {
         devServer: {
             hot: true,
-            contentBase: path.resolve(__dirname, 'dist'),
+            contentBase: path.resolve(__dirname, 'dist-template'),
             publicPath: '/'
         },
         devtool: 'inline-source-map',

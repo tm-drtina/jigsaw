@@ -40,13 +40,20 @@ body {
   background: rgba(0, 255, 0, 0.3);
   position: relative;
   overflow: hidden;
-}
 
-#board > div {
-  position: absolute;
-}
+  > img {
+    margin: 10%;
+    object-fit: contain;
+    height: 80%;
+    width: 80%;
+  }
 
-#board > div > svg {
-  height: 66px;
-  width: 66px;
+  > div {
+    position: absolute;
+
+    > svg {
+      height: 66px;
+      width: 66px;
+    }
+  }
 }

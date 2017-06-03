@@ -4,26 +4,51 @@ import Container from './container';
 const CONNECT_DISTANCE = 10;
 
 export default class Board {
+
+    tileHeight = 50;
+    tileWidth = 50;
+    tileHeightTotal = 66;
+    tileWidthTotal = 66;
+
+    width = 0;
+    height = 0;
+    rows = 0;
+    cols = 0;
+    topOffset = 0;
+    leftOffset = 0;
+
+    // Drag
+    dragTarget = null;
+    prevTop = 0;
+    prevLeft = 0;
+    startX = 0;
+    startY = 0;
+    zIndexMax = 0;
+
     constructor(el) {
         this.tiles = [];
         this.el = el;
-        this.width = 200;
-        this.height = 200;
-        this.rows = 4;
-        this.cols = 4;
-        this.tileWidth = this.width / this.cols;
-        this.tileHeight = this.height / this.rows;
-
-        // Drag
-        this.dragTarget = null;
-        this.prevTop = 0;
-        this.prevLeft = 0;
-        this.startX = 0;
-        this.startY = 0;
-        this.zIndexMax = 0;
     }
 
-    generateTiles() {
+    generateTiles(imageHeight, imageWidth) {
+        this.height = imageHeight;
+        this.width = imageWidth;
+        let patternHeight = 0;
+        this.rows = 0;
+        while (patternHeight < this.height) {
+            patternHeight += this.tileHeight;
+            this.rows += 1;
+        }
+        this.topOffset = (patternHeight - imageHeight) / 2;
+
+        let patternWidth = 0;
+        this.cols = 0;
+        while (patternWidth < this.width) {
+            patternWidth += this.tileWidth;
+            this.cols += 1;
+        }
+        this.leftOffset = (patternWidth - imageWidth) / 2;
+
         const tiles = [];
         for (let row = 0; row < this.rows; row++) {
             const tilesRow = [];
@@ -45,6 +70,13 @@ export default class Board {
         }
     }
 
+    removeTiles() {
+        this.tiles.forEach((tile) => {
+            tile.container.remove();
+        });
+        this.tiles = [];
+    }
+
     startDrag = (e, container) => {
         e.preventDefault();
         this.dragTarget = container;
@@ -58,6 +90,7 @@ export default class Board {
         }
         this.el.addEventListener('mousemove', this.handleMousemove);
         document.body.addEventListener('mouseleave', this.cancelDrag);
+        document.body.addEventListener('mouseup', this.cancelDrag);
     };
 
     handleMousemove = (e) => {
@@ -88,6 +121,8 @@ export default class Board {
             tile.setContainer(c, (c2.row - newRow) * this.tileHeight, (c2.col - newCol) * this.tileWidth);
             c1.tiles.forEach(other => tile.neighbors.delete(other));
         });
+        c1.remove();
+        c2.remove();
         this.checkDone();
     }
 
@@ -107,5 +142,6 @@ export default class Board {
         this.dragTarget = null;
         this.el.removeEventListener('mousemove', this.handleMousemove);
         document.body.removeEventListener('mouseleave', this.cancelDrag);
+        document.body.removeEventListener('mouseup', this.cancelDrag);
     }
 }
