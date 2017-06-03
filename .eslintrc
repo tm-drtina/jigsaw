@@ -17,6 +17,7 @@
     "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
     "max-len": ["off"],
     "react/prefer-stateless-function": ["error", { "ignorePureComponents": true }],
-    "react/jsx-no-bind": ["error"]
+    "react/jsx-no-bind": ["error"],
+    "no-empty": ["error", { "allowEmptyCatch": true }]
   }
 }

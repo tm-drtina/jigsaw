@@ -18,11 +18,6 @@ export default class Board {
     leftOffset = 0;
 
     // Drag
-    dragTarget = null;
-    prevTop = 0;
-    prevLeft = 0;
-    startX = 0;
-    startY = 0;
     zIndexMax = 0;
 
     constructor(el) {
@@ -77,30 +72,6 @@ export default class Board {
         this.tiles = [];
     }
 
-    startDrag = (e, container) => {
-        e.preventDefault();
-        this.dragTarget = container;
-        this.startX = e.clientX;
-        this.startY = e.clientY;
-        this.prevTop = parseInt(this.dragTarget.el.style.top, 10);
-        this.prevLeft = parseInt(this.dragTarget.el.style.left, 10);
-        if (this.zIndexMax === 0 || this.dragTarget.el.style.zIndex < this.zIndexMax) {
-            this.zIndexMax += 1;
-            this.dragTarget.el.style.zIndex = this.zIndexMax;
-        }
-        this.el.addEventListener('mousemove', this.handleMousemove);
-        document.body.addEventListener('mouseleave', this.cancelDrag);
-        document.body.addEventListener('mouseup', this.cancelDrag);
-    };
-
-    handleMousemove = (e) => {
-        if (this.dragTarget !== null) {
-            const newTop = Math.min(Math.max(0, (e.clientY - this.startY) + this.prevTop), this.el.clientHeight - 10);
-            const newLeft = Math.min(Math.max(0, (e.clientX - this.startX) + this.prevLeft), this.el.clientWidth - 10);
-            this.dragTarget.setPos(newTop, newLeft);
-        }
-    };
-
     checkDone() {
         if (this.tiles.reduce((acc, tile) => acc && tile.neighbors.size === 0, true)) {
             console.log('DONE');
@@ -126,9 +97,9 @@ export default class Board {
         this.checkDone();
     }
 
-    cancelDrag = () => {
-        for (let i = 0; i < this.dragTarget.tiles.length; i++) {
-            const tile = this.dragTarget.tiles[i];
+    cancelDrag = (container) => {
+        for (let i = 0; i < container.tiles.length; i++) {
+            const tile = container.tiles[i];
             tile.neighbors.forEach((other) => {
                 if (tile.getDistanceTo(other) <= CONNECT_DISTANCE) {
                     tile.neighbors.delete(other);
@@ -139,9 +110,5 @@ export default class Board {
                 }
             });
         }
-        this.dragTarget = null;
-        this.el.removeEventListener('mousemove', this.handleMousemove);
-        document.body.removeEventListener('mouseleave', this.cancelDrag);
-        document.body.removeEventListener('mouseup', this.cancelDrag);
     }
 }

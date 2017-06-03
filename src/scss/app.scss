@@ -41,6 +41,10 @@ body {
   position: relative;
   overflow: hidden;
 
+  * {
+    user-select: none;
+  }
+
   > img {
     margin: 10%;
     object-fit: contain;

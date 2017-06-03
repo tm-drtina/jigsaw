@@ -54,9 +54,6 @@ export default class Tile {
         this.svgEl.style.top = `${this.containerTopOffset}px`;
         this.svgEl.style.left = `${this.containerLeftOffset}px`;
         this.container.el.appendChild(this.svgEl);
-        this.rectEl.removeEventListener('mousedown', this.handleMousedown);
-        this.handleMousedown = e => this.board.startDrag.call(this.board, e, this.container);
-        this.rectEl.addEventListener('mousedown', this.handleMousedown);
     }
 
     getCoords() {
