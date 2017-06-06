@@ -13,20 +13,22 @@ class Jigsaw extends React.Component {
 
     componentDidMount() {
         this.board = new Board(this.boardEl, () => this.props.changeStatus(gameStatus.RUNNING), () => this.props.changeStatus(gameStatus.DONE));
+        if (this.props.gameStatus === gameStatus.RUNNING) {
+            this.props.changeStatus(gameStatus.LOADED);
+            // TODO: load saved state
+        }
     }
 
     componentWillReceiveProps(newProps) {
-        if (this.props.gameStatus !== gameStatus.START && newProps.gameStatus === gameStatus.START) {
-            this.board.generateTiles(newProps.imageHeight, newProps.imageWidth);
-        }
-        if (this.props.gameStatus !== gameStatus.ERROR && newProps.gameStatus === gameStatus.ERROR) {
-            this.board.removeTiles();
-        }
-
-        if (this.props.image !== newProps.image
-            || this.props.imageHeight !== newProps.imageHeight
-            || this.props.imageWidth !== newProps.imageWidth) {
-            this.board.removeTiles();
+        if (this.props.gameStatus !== newProps.gameStatus) {
+            if (newProps.gameStatus === gameStatus.ERROR
+                || newProps.gameStatus === gameStatus.LOADING
+                || newProps.gameStatus === gameStatus.LOADED
+            ) {
+                this.board.removeTiles();
+            } else if (newProps.gameStatus === gameStatus.START) {
+                this.board.generateTiles(newProps.imageHeight, newProps.imageWidth);
+            }
         }
     }
 
@@ -228,6 +230,12 @@ class Jigsaw extends React.Component {
                 <div className="panel-body" id="board" ref={(el) => { this.boardEl = el; }}>
                     {this.props.gameStatus === gameStatus.INIT &&
                         <h4>Load image from the top menu</h4>
+                    }
+                    {this.props.gameStatus === gameStatus.LOADING &&
+                        <div className="loading">
+                            <i className="fa fa-spinner fa-spin fa-3x fa-fw" />
+                            <span className="sr-only">Loading...</span>
+                        </div>
                     }
                     {this.props.gameStatus === gameStatus.ERROR &&
                         <h4>Selected image cannot be loaded</h4>

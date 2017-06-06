@@ -31,9 +31,9 @@ body {
   }
 }
 
-#loading {
+.loading {
   z-index: 1900;
-  position: fixed;
+  position: absolute;
   height: 100%;
   width: 100%;
   background: rgba(128, 128, 128, 0.1);
@@ -78,10 +78,6 @@ label[for="file-select"] {
 
   > div {
     position: absolute;
-
-    > svg {
-      height: 66px;
-      width: 66px;
-    }
+    transition: transform 0.1s ease-out;
   }
 }

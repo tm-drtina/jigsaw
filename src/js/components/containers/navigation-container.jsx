@@ -34,6 +34,7 @@ class NavigationContainer extends React.PureComponent {
     handleFileChange = (event) => {
         const file = event.target.files[0];
         if (!file) return;
+        this.props.changeStatus(gameStatus.LOADING);
         if (!checkFileExtension(file.name)) {
             this.props.changeStatus(gameStatus.ERROR);
         } else {

@@ -4,9 +4,10 @@ export default {
 
 export const gameStatus = {
     INIT: 1,
-    LOADED: 2,
-    START: 3,
-    RUNNING: 4,
-    DONE: 5,
+    LOADING: 2,
+    LOADED: 3,
+    START: 4,
+    RUNNING: 5,
+    DONE: 6,
     ERROR: -1
 };

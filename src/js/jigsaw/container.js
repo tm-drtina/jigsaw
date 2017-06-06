@@ -1,3 +1,5 @@
+import { throttle } from 'lodash';
+
 let passiveSupported = false;
 
 try {
@@ -11,11 +13,13 @@ try {
 } catch (err) {}
 
 export default class Container {
-    constructor(board, tiles, row, col, initTop, initLeft) {
+    constructor(board, tiles, row, col, maxRow, maxCol, initTop, initLeft) {
         this.board = board;
         this.tiles = tiles;
         this.row = row;
         this.col = col;
+        this.maxRow = maxRow;
+        this.maxCol = maxCol;
         this.deleted = false;
         this.el = document.createElement('div');
         this.el.style.pointerEvents = 'none';
@@ -26,8 +30,6 @@ export default class Container {
         this.el.addEventListener('touchstart', this.handleDragStart);
     }
 
-    prevTop = 0;
-    prevLeft = 0;
     startX = 0;
     startY = 0;
 
@@ -40,8 +42,6 @@ export default class Container {
             this.startX = e.clientX;
             this.startY = e.clientY;
         }
-        this.prevTop = parseInt(this.el.style.top, 10);
-        this.prevLeft = parseInt(this.el.style.left, 10);
         if (this.board.zIndexMax === 0 || this.el.style.zIndex < this.board.zIndexMax) {
             this.board.zIndexMax += 1;
             this.el.style.zIndex = this.board.zIndexMax;
@@ -54,7 +54,7 @@ export default class Container {
         document.addEventListener('mouseup', this.handleDragEnd);
     };
 
-    handleDrag = (e) => {
+    handleDrag = throttle((e) => {
         let x;
         let y;
         if (e.type === 'touchmove') {
@@ -67,10 +67,12 @@ export default class Container {
         }
         e.preventDefault();
         e.stopPropagation();
-        const newTop = Math.min(Math.max(0, (y - this.startY) + this.prevTop), this.board.el.clientHeight - 10);
-        const newLeft = Math.min(Math.max(0, (x - this.startX) + this.prevLeft), this.board.el.clientWidth - 10);
+        const newTop = Math.min(Math.max(0, (y - this.startY) + this.top), this.board.el.clientHeight - (((this.maxRow - this.row) + 1) * this.board.tileSizeScaled()));
+        const newLeft = Math.min(Math.max(0, (x - this.startX) + this.left), this.board.el.clientWidth - (((this.maxCol - this.col) + 1) * this.board.tileSizeScaled()));
+        this.startY = y;
+        this.startX = x;
         this.setPos(newTop, newLeft);
-    };
+    }, 50);
 
     handleDragEnd = (e) => {
         if (e.type === 'touchend') {
@@ -89,8 +91,7 @@ export default class Container {
     setPos(top, left) {
         this.top = top;
         this.left = left;
-        this.el.style.top = `${top}px`;
-        this.el.style.left = `${left}px`;
+        this.el.style.transform = `translate(${left}px, ${top}px)`;
     }
 
     remove() {
