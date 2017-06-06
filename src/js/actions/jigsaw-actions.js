@@ -9,8 +9,9 @@ export function changeFile(dataURL, height, width) {
     };
 }
 
-export function startGame() {
+export function changeStatus(status) {
     return {
-        type: types.JIGSAW_START_GAME
+        type: types.JIGSAW_STATUS_CHANGE,
+        status
     };
 }

@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import config, { gameStatus } from '../../config';
 import Board from '../../jigsaw/board';
-
-const MAX_WIDTH = 300;
-const MAX_HEIGHT = 300;
 
 /**
  *
@@ -13,53 +11,28 @@ const MAX_HEIGHT = 300;
  */
 class Jigsaw extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.setImage(props.image, props.imageHeight, props.imageWidth);
-    }
-
     componentDidMount() {
-        this.board = new Board(this.boardEl);
+        this.board = new Board(this.boardEl, () => this.props.changeStatus(gameStatus.RUNNING), () => this.props.changeStatus(gameStatus.DONE));
     }
 
     componentWillReceiveProps(newProps) {
-        if (!this.props.gameStarted && newProps.gameStarted) { // Game started
-            this.board.generateTiles(this.imageHeight, this.imageWidth);
+        if (this.props.gameStatus !== gameStatus.START && newProps.gameStatus === gameStatus.START) {
+            this.board.generateTiles(newProps.imageHeight, newProps.imageWidth);
         }
+        if (this.props.gameStatus !== gameStatus.ERROR && newProps.gameStatus === gameStatus.ERROR) {
+            this.board.removeTiles();
+        }
+
         if (this.props.image !== newProps.image
             || this.props.imageHeight !== newProps.imageHeight
             || this.props.imageWidth !== newProps.imageWidth) {
-            this.setImage(newProps.image, newProps.imageHeight, newProps.imageWidth);
             this.board.removeTiles();
-        }
-    }
-
-    onChangeHandler = event => this.props.handleFileChange(event.target.files[0]);
-
-    setImage(image, height, width) {
-        if (height > 0 && width > 0) {
-            this.imageValid = true;
-            this.image = image;
-
-            let scale = MAX_HEIGHT / height;
-            if (MAX_WIDTH / width < scale) {
-                scale = MAX_WIDTH / width;
-            }
-
-            this.imageHeight = height * scale;
-            this.imageWidth = width * scale;
-        } else {
-            this.imageValid = false;
-            this.image = 'no-image.svg';
-            this.imageHeight = 0;
-            this.imageWidth = 0;
         }
     }
 
     render() {
         return (
-            <div>
+            <div className="panel panel-default jigsaw">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -243,7 +216,7 @@ class Jigsaw extends React.Component {
                         <pattern id="img1" width="100%" height="100%" patternContentUnits="objectBoundingBox">
                             <image
                                 preserveAspectRatio="none"
-                                xlinkHref={this.image}
+                                xlinkHref={this.props.image}
                                 x="0"
                                 y="0"
                                 height="1"
@@ -252,12 +225,22 @@ class Jigsaw extends React.Component {
                         </pattern>
                     </defs>
                 </svg>
-                <div id="board" ref={(el) => { this.boardEl = el; }}>
-                    <img src={this.image} alt="" style={{ display: this.props.gameStarted ? 'none' : 'block' }} />
-                </div>
-                <div>
-                    <input type="file" accept="image/*" onChange={this.onChangeHandler} />
-                    <button disabled={!this.imageValid} onClick={this.props.startGame}>Start game</button>
+                <div className="panel-body" id="board" ref={(el) => { this.boardEl = el; }}>
+                    {this.props.gameStatus === gameStatus.INIT &&
+                        <h4>Load image from the top menu</h4>
+                    }
+                    {this.props.gameStatus === gameStatus.ERROR &&
+                        <h4>Selected image cannot be loaded</h4>
+                    }
+                    {this.props.gameStatus === gameStatus.LOADED &&
+                        <img draggable={false} src={this.props.image} alt="" />
+                    }
+                    {(this.props.gameStatus === gameStatus.ERROR || this.props.gameStatus === gameStatus.INIT) &&
+                        <img draggable={false} src={config.noImage} alt="" />
+                    }
+                    {this.props.gameStatus === gameStatus.DONE &&
+                        <span>DONE</span>
+                    }
                 </div>
             </div>
         );
@@ -265,9 +248,9 @@ class Jigsaw extends React.Component {
 }
 
 Jigsaw.propTypes = {
-    gameStarted: PropTypes.bool.isRequired,
-    startGame: PropTypes.func.isRequired,
-    handleFileChange: PropTypes.func.isRequired,
+    gameStatus: PropTypes.number.isRequired,
+    changeStatus: PropTypes.func.isRequired,
+
     image: PropTypes.string.isRequired,
     imageHeight: PropTypes.number.isRequired,
     imageWidth: PropTypes.number.isRequired

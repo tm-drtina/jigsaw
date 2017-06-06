@@ -1,10 +1,11 @@
 import * as types from '../actions/action-types';
+import config, { gameStatus } from '../config';
 
 const initialState = {
-    dataURL: '',
+    dataURL: config.noImage,
     height: 0,
     width: 0,
-    gameStarted: false
+    status: gameStatus.INIT
 };
 
 export default function jigsawReducer(state = initialState, action) {
@@ -14,11 +15,11 @@ export default function jigsawReducer(state = initialState, action) {
                 dataURL: action.dataURL,
                 height: action.height,
                 width: action.width,
-                gameStarted: false
+                status: gameStatus.LOADED
             });
-        case types.JIGSAW_START_GAME:
+        case types.JIGSAW_STATUS_CHANGE:
             return Object.assign({}, state, {
-                gameStarted: true
+                status: action.status
             });
         default:
             return state;

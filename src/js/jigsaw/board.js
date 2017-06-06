@@ -2,6 +2,8 @@ import Tile from './tile';
 import Container from './container';
 
 const CONNECT_DISTANCE = 10;
+const MAX_WIDTH = 300;
+const MAX_HEIGHT = 300;
 
 export default class Board {
 
@@ -20,21 +22,32 @@ export default class Board {
     // Drag
     zIndexMax = 0;
 
-    constructor(el) {
+    constructor(el, gameStartedCallback, doneCallback) {
         this.tiles = [];
         this.el = el;
+        this.gameStartedCallback = gameStartedCallback;
+        this.doneCallback = doneCallback;
     }
 
     generateTiles(imageHeight, imageWidth) {
-        this.height = imageHeight;
-        this.width = imageWidth;
+        if (this.tiles.length > 0) {
+            this.removeTiles();
+        }
+        let scale = MAX_HEIGHT / imageHeight;
+        if (MAX_WIDTH / imageWidth < scale) {
+            scale = MAX_WIDTH / imageWidth;
+        }
+
+        this.height = imageHeight * scale;
+        this.width = imageWidth * scale;
+
         let patternHeight = 0;
         this.rows = 0;
         while (patternHeight < this.height) {
             patternHeight += this.tileHeight;
             this.rows += 1;
         }
-        this.topOffset = (patternHeight - imageHeight) / 2;
+        this.topOffset = (patternHeight - this.height) / 2;
 
         let patternWidth = 0;
         this.cols = 0;
@@ -42,7 +55,7 @@ export default class Board {
             patternWidth += this.tileWidth;
             this.cols += 1;
         }
-        this.leftOffset = (patternWidth - imageWidth) / 2;
+        this.leftOffset = (patternWidth - this.width) / 2;
 
         const tiles = [];
         for (let row = 0; row < this.rows; row++) {
@@ -63,6 +76,7 @@ export default class Board {
                 if (!tile.bot) tile.neighbors.add(tiles[row + 1][col]);
             }
         }
+        this.gameStartedCallback();
     }
 
     removeTiles() {
@@ -74,7 +88,7 @@ export default class Board {
 
     checkDone() {
         if (this.tiles.reduce((acc, tile) => acc && tile.neighbors.size === 0, true)) {
-            console.log('DONE');
+            this.doneCallback();
         }
     }
 

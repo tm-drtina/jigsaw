@@ -6,14 +6,29 @@ $fa-font-path: "~font-awesome/fonts";
 
 @import "~font-awesome/scss/font-awesome";
 
-html {
+html,
+body,
+#app,
+.main-layout {
   height: 100%;
+  min-width: 300px;
 }
 
 body {
   font-family: 'Roboto', sans-serif;
   // background-color: #f7f7f7;
-  height: 100%;
+}
+
+.layout-content {
+  height: calc(100% - 87px);
+}
+
+.jigsaw {
+  height: calc(100% - #{$line-height-computed});
+
+  > div {
+    height: 100%;
+  }
 }
 
 #loading {
@@ -34,22 +49,31 @@ body {
   }
 }
 
+#file-select {
+  display: none;
+}
+
+label[for="file-select"] {
+  width: 100%;
+  margin-bottom: 0;
+}
+
 #board {
-  width: 500px;
-  height: 500px;
-  background: rgba(0, 255, 0, 0.3);
+  background: #f5f5f5;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   * {
     user-select: none;
   }
 
-  > img {
-    margin: 10%;
+  img {
+    padding: 5%;
     object-fit: contain;
-    height: 80%;
-    width: 80%;
+    flex-grow: 1;
+    max-height: 100%;
   }
 
   > div {

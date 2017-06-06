@@ -2,39 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { changeFile, startGame } from '../../actions/jigsaw-actions';
+import { changeFile, changeStatus } from '../../actions/jigsaw-actions';
 
 import Jigsaw from '../views/jigsaw';
 
 class JigsawContainer extends React.PureComponent {
 
-    static checkFileExtension(filename) {
-        return /\.(jpe?g|png|gif)$/i.test(filename);
-    }
-
-    handleFileLoaded = (event) => {
-        const imgSrc = event.target.result;
-        const img = new Image();
-        img.src = imgSrc;
-        img.addEventListener('load', () => this.props.changeFile(imgSrc, img.height, img.width));
-    };
-
-    handleFileChange = (file) => {
-        if (!file) return;
-        if (!JigsawContainer.checkFileExtension(file.name)) {
-            // show error
-        } else {
-            const reader = new FileReader();
-            reader.addEventListener('load', this.handleFileLoaded);
-            reader.readAsDataURL(file);
-        }
-    };
-
     render() {
         return (
             <Jigsaw
-                gameStarted={this.props.gameStarted}
-                startGame={this.props.startGame}
+                gameStatus={this.props.gameStatus}
+                changeStatus={this.props.changeStatus}
                 handleFileChange={this.handleFileChange}
                 image={this.props.image}
                 imageHeight={this.props.imageHeight}
@@ -42,12 +20,11 @@ class JigsawContainer extends React.PureComponent {
             />
         );
     }
-
 }
 
 JigsawContainer.propTypes = {
-    gameStarted: PropTypes.bool.isRequired,
-    startGame: PropTypes.func.isRequired,
+    gameStatus: PropTypes.number.isRequired,
+    changeStatus: PropTypes.func.isRequired,
     image: PropTypes.string.isRequired,
     imageHeight: PropTypes.number.isRequired,
     imageWidth: PropTypes.number.isRequired,
@@ -58,11 +35,12 @@ const mapStateToProps = state => ({
     image: state.jigsaw.dataURL,
     imageHeight: state.jigsaw.height,
     imageWidth: state.jigsaw.width,
-    gameStarted: state.jigsaw.gameStarted
+    imageValid: state.jigsaw.valid,
+    gameStatus: state.jigsaw.status
 });
 
 const mapDispatchToProps = dispatch => ({
-    startGame: () => dispatch(startGame()),
+    changeStatus: status => dispatch(changeStatus(status)),
     changeFile: (file, height, width) => dispatch(changeFile(file, height, width))
 });
 
