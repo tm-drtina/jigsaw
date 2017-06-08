@@ -10,14 +10,12 @@ export default class Tile {
         this.bot = row === this.board.rows - 1;
         this.left = col === 0;
         this.right = col === this.board.cols - 1;
-        this.containerTopOffset = 0;
-        this.containerLeftOffset = 0;
 
         this.svgEl = document.createElementNS(svgNS, 'svg');
         this.svgEl.setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xlink', 'http://www.w3.org/1999/xlink');
         this.svgEl.setAttribute('height', `${this.board.tileSizeTotalScaled()}`);
         this.svgEl.setAttribute('width', `${this.board.tileSizeTotalScaled()}`);
-        this.svgEl.setAttribute('viewBox', `0 0 ${this.board.tileSizeTotal} ${this.board.tileSizeTotal}`);
+        this.svgEl.setAttribute('viewBox', `-1 -1 ${this.board.tileSizeTotal} ${this.board.tileSizeTotal}`);
         this.svgEl.style.position = 'absolute';
 
         this.backgroundFill = document.createElementNS(svgNS, 'rect');

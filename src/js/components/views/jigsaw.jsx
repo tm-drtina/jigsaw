@@ -58,8 +58,8 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="2"
-                                strokeDasharray="2, 4"
+                                strokeWidth="1"
+                                strokeDasharray="1, 2"
                                 id="tile-path"
                                 fill="transparent"
                                 style={{ vectorEffect: 'non-scaling-stroke' }}
@@ -79,8 +79,8 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="2"
-                                strokeDasharray="2, 4"
+                                strokeWidth="1"
+                                strokeDasharray="1, 2"
                                 id="tile-path-top"
                                 fill="transparent"
                                 style={{ vectorEffect: 'non-scaling-stroke' }}
@@ -98,8 +98,8 @@ class Jigsaw extends React.Component {
                                    l -20 0
                                    l 0 -50"
                                 stroke="red"
-                                strokeWidth="2"
-                                strokeDasharray="2, 4"
+                                strokeWidth="1"
+                                strokeDasharray="1, 2"
                                 id="tile-path-top-left"
                                 fill="transparent"
                                 style={{ vectorEffect: 'non-scaling-stroke' }}
@@ -117,8 +117,8 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="2"
-                                strokeDasharray="2, 4"
+                                strokeWidth="1"
+                                strokeDasharray="1, 2"
                                 id="tile-path-top-right"
                                 fill="transparent"
                                 style={{ vectorEffect: 'non-scaling-stroke' }}
@@ -138,8 +138,8 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="2"
-                                strokeDasharray="2, 4"
+                                strokeWidth="1"
+                                strokeDasharray="1, 2"
                                 id="tile-path-bot"
                                 fill="transparent"
                                 style={{ vectorEffect: 'non-scaling-stroke' }}
@@ -157,8 +157,8 @@ class Jigsaw extends React.Component {
                                    l -50 0
                                    l 0 -50"
                                 stroke="red"
-                                strokeWidth="2"
-                                strokeDasharray="2, 4"
+                                strokeWidth="1"
+                                strokeDasharray="1, 2"
                                 id="tile-path-bot-left"
                                 fill="transparent"
                                 style={{ vectorEffect: 'non-scaling-stroke' }}
@@ -176,8 +176,8 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="2"
-                                strokeDasharray="2, 4"
+                                strokeWidth="1"
+                                strokeDasharray="1, 2"
                                 id="tile-path-bot-right"
                                 fill="transparent"
                                 style={{ vectorEffect: 'non-scaling-stroke' }}
@@ -197,8 +197,8 @@ class Jigsaw extends React.Component {
                                    l -20 0
                                    l 0 -50"
                                 stroke="red"
-                                strokeWidth="2"
-                                strokeDasharray="2, 4"
+                                strokeWidth="1"
+                                strokeDasharray="1, 2"
                                 id="tile-path-left"
                                 fill="transparent"
                                 style={{ vectorEffect: 'non-scaling-stroke' }}
@@ -218,8 +218,8 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="2"
-                                strokeDasharray="2, 4"
+                                strokeWidth="1"
+                                strokeDasharray="1, 2"
                                 id="tile-path-right"
                                 fill="transparent"
                                 style={{ vectorEffect: 'non-scaling-stroke' }}
