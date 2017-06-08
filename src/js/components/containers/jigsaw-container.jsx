@@ -17,6 +17,7 @@ class JigsawContainer extends React.PureComponent {
                 image={this.props.image}
                 imageHeight={this.props.imageHeight}
                 imageWidth={this.props.imageWidth}
+                tilesPerRowCol={3 /* TODO: set from settings */}
             />
         );
     }

@@ -80,4 +80,22 @@ label[for="file-select"] {
     position: absolute;
     transition: transform 0.1s ease-out;
   }
+
+  .modal-wrapper {
+    height: 100%;
+    width: 100%;
+    margin-left: -$panel-body-padding;
+    margin-top: -$panel-body-padding;
+
+    .modal {
+      display: block;
+    }
+
+    .modal,
+    .modal-backdrop {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+    }
+  }
 }

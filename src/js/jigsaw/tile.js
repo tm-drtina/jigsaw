@@ -1,5 +1,3 @@
-import Container from './container';
-
 const svgNS = 'http://www.w3.org/2000/svg';
 
 export default class Tile {
@@ -43,23 +41,27 @@ export default class Tile {
         const pathEl = document.createElementNS(svgNS, 'use');
         pathEl.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `#tile-path${this.top ? '-top' : ''}${this.bot ? '-bot' : ''}${this.left ? '-left' : ''}${this.right ? '-right' : ''}`);
         this.svgEl.appendChild(pathEl);
-
-        this.setContainer(new Container(board, [this], row, col, row, col, row * ((this.board.tileSizeScaled()) + 20), col * ((this.board.tileSizeScaled()) + 20)), 0, 0);
     }
 
-    setContainer(container, topOffsetDiff, leftOffsetDiff) {
+    resize() {
+        this.svgEl.setAttribute('height', `${this.board.tileSizeTotalScaled()}`);
+        this.svgEl.setAttribute('width', `${this.board.tileSizeTotalScaled()}`);
+        this.svgEl.style.top = `${this.rowInContainer * this.board.tileSizeScaled()}px`;
+        this.svgEl.style.left = `${this.colInContainer * this.board.tileSizeScaled()}px`;
+    }
+
+    setContainer(container, rowInContainer = 0, colInContainer = 0) {
         this.container = container;
-        this.containerTopOffset += topOffsetDiff;
-        this.containerLeftOffset += leftOffsetDiff;
-        this.svgEl.style.top = `${this.containerTopOffset}px`;
-        this.svgEl.style.left = `${this.containerLeftOffset}px`;
+        this.rowInContainer = rowInContainer;
+        this.colInContainer = colInContainer;
+        this.resize();
         this.container.el.appendChild(this.svgEl);
     }
 
     getCoords() {
         return {
-            top: this.containerTopOffset + this.container.top,
-            left: this.containerLeftOffset + this.container.left
+            top: (this.rowInContainer * this.board.tileSizeScaled()) + this.container.top,
+            left: (this.colInContainer * this.board.tileSizeScaled()) + this.container.left
         };
     }
 

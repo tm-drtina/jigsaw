@@ -30,6 +30,8 @@ export default class Container {
         this.el.addEventListener('touchstart', this.handleDragStart);
     }
 
+    prevTop = 0;
+    prevLeft = 0;
     startX = 0;
     startY = 0;
 
@@ -42,6 +44,8 @@ export default class Container {
             this.startX = e.clientX;
             this.startY = e.clientY;
         }
+        this.prevLeft = this.left;
+        this.prevTop = this.top;
         if (this.board.zIndexMax === 0 || this.el.style.zIndex < this.board.zIndexMax) {
             this.board.zIndexMax += 1;
             this.el.style.zIndex = this.board.zIndexMax;
@@ -67,10 +71,8 @@ export default class Container {
         }
         e.preventDefault();
         e.stopPropagation();
-        const newTop = Math.min(Math.max(0, (y - this.startY) + this.top), this.board.el.clientHeight - (((this.maxRow - this.row) + 1) * this.board.tileSizeScaled()));
-        const newLeft = Math.min(Math.max(0, (x - this.startX) + this.left), this.board.el.clientWidth - (((this.maxCol - this.col) + 1) * this.board.tileSizeScaled()));
-        this.startY = y;
-        this.startX = x;
+        const newTop = Math.min(Math.max(0, (y - this.startY) + this.prevTop), this.board.el.clientHeight - (((this.maxRow - this.row) + 1) * this.board.tileSizeScaled()));
+        const newLeft = Math.min(Math.max(0, (x - this.startX) + this.prevLeft), this.board.el.clientWidth - (((this.maxCol - this.col) + 1) * this.board.tileSizeScaled()));
         this.setPos(newTop, newLeft);
     }, 50);
 
@@ -87,6 +89,10 @@ export default class Container {
         document.removeEventListener('mouseleave', this.handleDragEnd);
         document.removeEventListener('mouseup', this.handleDragEnd);
     };
+
+    resize(topScale, leftScale) {
+        this.setPos(this.top * topScale, this.left * leftScale);
+    }
 
     setPos(top, left) {
         this.top = top;

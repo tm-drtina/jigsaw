@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import config, { gameStatus } from '../../config';
 import Board from '../../jigsaw/board';
+import Modal from './modal';
 
 /**
  *
@@ -27,7 +28,7 @@ class Jigsaw extends React.Component {
             ) {
                 this.board.removeTiles();
             } else if (newProps.gameStatus === gameStatus.START) {
-                this.board.generateTiles(newProps.imageHeight, newProps.imageWidth);
+                this.board.generateTiles(newProps.imageHeight, newProps.imageWidth, newProps.tilesPerRowCol);
             }
         }
     }
@@ -44,18 +45,18 @@ class Jigsaw extends React.Component {
                         <clipPath id="tile">
                             <path
                                 d="M 0 0
-                                   L 20 0
-                                   A 8 8 0 1 0 30 0
-                                   L 50 0
-                                   L 50 20
-                                   A 8 8 0 1 1 50 30
-                                   L 50 50
-                                   L 30 50
-                                   A 8 8 0 1 1 20 50
-                                   L 0 50
-                                   L 0 30
-                                   A 8 8 0 1 0 0 20
-                                   L 0 0"
+                                   l 20 0
+                                   a 8 8 0 1 0 10 0
+                                   l 20 0
+                                   l 0 20
+                                   a 8 8 0 1 1 0 10
+                                   l 0 20
+                                   l -20 0
+                                   a 8 8 0 1 1 -10 0
+                                   l -20 0
+                                   l 0 -20
+                                   a 8 8 0 1 0 0 -10
+                                   l 0 -20"
                                 stroke="red"
                                 strokeWidth="1"
                                 strokeDasharray="1, 2"
@@ -66,16 +67,16 @@ class Jigsaw extends React.Component {
                         <clipPath id="tile-top">
                             <path
                                 d="M 0 0
-                                   L 50 0
-                                   L 50 20
-                                   A 8 8 0 1 1 50 30
-                                   L 50 50
-                                   L 30 50
-                                   A 8 8 0 1 1 20 50
-                                   L 0 50
-                                   L 0 30
-                                   A 8 8 0 1 0 0 20
-                                   L 0 0"
+                                   l 50 0
+                                   l 0 20
+                                   a 8 8 0 1 1 0 10
+                                   l 0 20
+                                   l -20 0
+                                   a 8 8 0 1 1 -10 0
+                                   l -20 0
+                                   l 0 -20
+                                   a 8 8 0 1 0 0 -10
+                                   l 0 -20"
                                 stroke="red"
                                 strokeWidth="1"
                                 strokeDasharray="1, 2"
@@ -86,14 +87,14 @@ class Jigsaw extends React.Component {
                         <clipPath id="tile-top-left">
                             <path
                                 d="M 0 0
-                                   L 50 0
-                                   L 50 20
-                                   A 8 8 0 1 1 50 30
-                                   L 50 50
-                                   L 30 50
-                                   A 8 8 0 1 1 20 50
-                                   L 0 50
-                                   L 0 0"
+                                   l 50 0
+                                   l 0 20
+                                   a 8 8 0 1 1 0 10
+                                   l 0 20
+                                   l -20 0
+                                   a 8 8 0 1 1 -10 0
+                                   l -20 0
+                                   l 0 -50"
                                 stroke="red"
                                 strokeWidth="1"
                                 strokeDasharray="1, 2"
@@ -104,14 +105,14 @@ class Jigsaw extends React.Component {
                         <clipPath id="tile-top-right">
                             <path
                                 d="M 0 0
-                                   L 50 0
-                                   L 50 50
-                                   L 30 50
-                                   A 8 8 0 1 1 20 50
-                                   L 0 50
-                                   L 0 30
-                                   A 8 8 0 1 0 0 20
-                                   L 0 0"
+                                   l 50 0
+                                   l 0 50
+                                   l -20 0
+                                   a 8 8 0 1 1 -10 0
+                                   l -20 0
+                                   l 0 -20
+                                   a 8 8 0 1 0 0 -10
+                                   l 0 -20"
                                 stroke="red"
                                 strokeWidth="1"
                                 strokeDasharray="1, 2"
@@ -122,16 +123,16 @@ class Jigsaw extends React.Component {
                         <clipPath id="tile-bot">
                             <path
                                 d="M 0 0
-                                   L 20 0
-                                   A 8 8 0 1 0 30 0
-                                   L 50 0
-                                   L 50 20
-                                   A 8 8 0 1 1 50 30
-                                   L 50 50
-                                   L 0 50
-                                   L 0 30
-                                   A 8 8 0 1 0 0 20
-                                   L 0 0"
+                                   l 20 0
+                                   a 8 8 0 1 0 10 0
+                                   l 20 0
+                                   l 0 20
+                                   a 8 8 0 1 1 0 10
+                                   l 0 20
+                                   l -50 0
+                                   l 0 -20
+                                   a 8 8 0 1 0 0 -10
+                                   l 0 -20"
                                 stroke="red"
                                 strokeWidth="1"
                                 strokeDasharray="1, 2"
@@ -142,14 +143,14 @@ class Jigsaw extends React.Component {
                         <clipPath id="tile-bot-left">
                             <path
                                 d="M 0 0
-                                   L 20 0
-                                   A 8 8 0 1 0 30 0
-                                   L 50 0
-                                   L 50 20
-                                   A 8 8 0 1 1 50 30
-                                   L 50 50
-                                   L 0 50
-                                   L 0 0"
+                                   l 20 0
+                                   a 8 8 0 1 0 10 0
+                                   l 20 0
+                                   l 0 20
+                                   a 8 8 0 1 1 0 10
+                                   l 0 20
+                                   l -50 0
+                                   l 0 -50"
                                 stroke="red"
                                 strokeWidth="1"
                                 strokeDasharray="1, 2"
@@ -160,14 +161,14 @@ class Jigsaw extends React.Component {
                         <clipPath id="tile-bot-right">
                             <path
                                 d="M 0 0
-                                   L 20 0
-                                   A 8 8 0 1 0 30 0
-                                   L 50 0
-                                   L 50 50
-                                   L 0 50
-                                   L 0 30
-                                   A 8 8 0 1 0 0 20
-                                   L 0 0"
+                                   l 20 0
+                                   a 8 8 0 1 0 10 0
+                                   l 20 0
+                                   l 0 50
+                                   l -50 0
+                                   l 0 -20
+                                   a 8 8 0 1 0 0 -10
+                                   l 0 -20"
                                 stroke="red"
                                 strokeWidth="1"
                                 strokeDasharray="1, 2"
@@ -178,16 +179,16 @@ class Jigsaw extends React.Component {
                         <clipPath id="tile-left">
                             <path
                                 d="M 0 0
-                                   L 20 0
-                                   A 8 8 0 1 0 30 0
-                                   L 50 0
-                                   L 50 20
-                                   A 8 8 0 1 1 50 30
-                                   L 50 50
-                                   L 30 50
-                                   A 8 8 0 1 1 20 50
-                                   L 0 50
-                                   L 0 0"
+                                   l 20 0
+                                   a 8 8 0 1 0 10 0
+                                   l 20 0
+                                   l 0 20
+                                   a 8 8 0 1 1 0 10
+                                   l 0 20
+                                   l -20 0
+                                   a 8 8 0 1 1 -10 0
+                                   l -20 0
+                                   l 0 -50"
                                 stroke="red"
                                 strokeWidth="1"
                                 strokeDasharray="1, 2"
@@ -198,16 +199,16 @@ class Jigsaw extends React.Component {
                         <clipPath id="tile-right">
                             <path
                                 d="M 0 0
-                                   L 20 0
-                                   A 8 8 0 1 0 30 0
-                                   L 50 0
-                                   L 50 50
-                                   L 30 50
-                                   A 8 8 0 1 1 20 50
-                                   L 0 50
-                                   L 0 30
-                                   A 8 8 0 1 0 0 20
-                                   L 0 0"
+                                   l 20 0
+                                   a 8 8 0 1 0 10 0
+                                   l 20 0
+                                   l 0 50
+                                   l -20 0
+                                   a 8 8 0 1 1 -10 0
+                                   l -20 0
+                                   l 0 -20
+                                   a 8 8 0 1 0 0 -10
+                                   l 0 -20"
                                 stroke="red"
                                 strokeWidth="1"
                                 strokeDasharray="1, 2"
@@ -231,7 +232,7 @@ class Jigsaw extends React.Component {
                     {this.props.gameStatus === gameStatus.INIT &&
                         <h4>Load image from the top menu</h4>
                     }
-                    {this.props.gameStatus === gameStatus.LOADING &&
+                    {(this.props.gameStatus === gameStatus.LOADING || this.props.gameStatus === gameStatus.START) &&
                         <div className="loading">
                             <i className="fa fa-spinner fa-spin fa-3x fa-fw" />
                             <span className="sr-only">Loading...</span>
@@ -247,7 +248,7 @@ class Jigsaw extends React.Component {
                         <img draggable={false} src={config.noImage} alt="" />
                     }
                     {this.props.gameStatus === gameStatus.DONE &&
-                        <span>DONE</span>
+                        <Modal title="Congratulations" text="You've successfully completed this puzzle." onClose={() => this.props.changeStatus(gameStatus.LOADED)} />
                     }
                 </div>
             </div>
@@ -258,6 +259,8 @@ class Jigsaw extends React.Component {
 Jigsaw.propTypes = {
     gameStatus: PropTypes.number.isRequired,
     changeStatus: PropTypes.func.isRequired,
+
+    tilesPerRowCol: PropTypes.number.isRequired,
 
     image: PropTypes.string.isRequired,
     imageHeight: PropTypes.number.isRequired,

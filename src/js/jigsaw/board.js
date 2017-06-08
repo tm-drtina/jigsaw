@@ -1,7 +1,9 @@
+import { throttle } from 'lodash';
+
 import Tile from './tile';
 import Container from './container';
 
-const CONNECT_DISTANCE = 10;
+const CONNECT_DISTANCE = 15;
 
 export default class Board {
 
@@ -9,11 +11,12 @@ export default class Board {
     tileSizeTotal = 66;
 
     scale = 1;
+    resizeScale = 1;
 
-    tileSizeScaled = () => Math.floor(this.tileSize * this.scale);
-    tileSizeTotalScaled = () => Math.floor(this.tileSizeTotal * this.scale);
+    tileSizeScaled = () => Math.floor(this.tileSize * this.scale * this.resizeScale);
+    tileSizeTotalScaled = () => Math.floor(this.tileSizeTotal * this.scale * this.resizeScale);
 
-    maxRowsCols = 10;
+    maxRowsCols = 2;
 
     width = 0;
     height = 0;
@@ -22,20 +25,52 @@ export default class Board {
     topOffset = 0;
     leftOffset = 0;
 
+    boardWidth = 0;
+    boardHeight = 0;
+
     // Drag
     zIndexMax = 0;
 
     constructor(el, gameStartedCallback, doneCallback) {
         this.tiles = [];
+        this.containers = new Set();
         this.el = el;
         this.gameStartedCallback = gameStartedCallback;
         this.doneCallback = doneCallback;
     }
 
-    generateTiles(imageHeight, imageWidth) {
+    resizeHandler = throttle(() => {
+        const maxHeight = this.el.clientHeight * 0.6;
+        const maxWidth = this.el.clientWidth * 0.6;
+
+        let scale = maxHeight / this.height;
+        if (maxWidth / this.width < scale) {
+            scale = maxWidth / this.width;
+        }
+
+        const topScale = this.el.clientHeight / this.boardHeight;
+        const leftScale = this.el.clientWidth / this.boardWidth;
+        this.resizeScale = scale;
+
+        this.containers.forEach(container => container.resize(topScale, leftScale));
+        this.tiles.forEach(tile => tile.resize(this.resizeScale, scale));
+
+        this.boardHeight = this.el.clientHeight;
+        this.boardWidth = this.el.clientWidth;
+    }, 20);
+
+    generateTiles(imageHeight, imageWidth, maxRowsCols) {
         if (this.tiles.length > 0) {
             this.removeTiles();
         }
+
+        this.maxRowsCols = maxRowsCols;
+        this.boardHeight = this.el.clientHeight;
+        this.boardWidth = this.el.clientWidth;
+        this.resizeScale = 1;
+        this.zIndexMax = 0;
+
+        window.addEventListener('resize', this.resizeHandler);
 
         const maxHeight = this.el.clientHeight * 0.6;
         const maxWidth = this.el.clientWidth * 0.6;
@@ -54,7 +89,7 @@ export default class Board {
 
             this.cols = 0;
             let patternWidth = 0;
-            while (patternWidth < this.width) {
+            while (patternWidth < this.width && this.cols < this.maxRowsCols) {
                 patternWidth += this.tileSizeScaled();
                 this.cols += 1;
             }
@@ -67,7 +102,7 @@ export default class Board {
 
             this.rows = 0;
             let patternHeight = 0;
-            while (patternHeight < this.height) {
+            while (patternHeight < this.height && this.rows < this.maxRowsCols) {
                 patternHeight += this.tileSizeScaled();
                 this.rows += 1;
             }
@@ -83,6 +118,9 @@ export default class Board {
                 const tile = new Tile(this, row, col);
                 tilesRow.push(tile);
                 this.tiles.push(tile);
+                const container = new Container(this, [tile], row, col, row, col, row * ((this.tileSizeScaled()) + 20), col * ((this.tileSizeScaled()) + 20));
+                this.containers.add(container);
+                tile.setContainer(container);
             }
             tiles.push(tilesRow);
         }
@@ -99,10 +137,10 @@ export default class Board {
     }
 
     removeTiles() {
-        this.tiles.forEach((tile) => {
-            tile.container.remove();
-        });
+        window.removeEventListener('resize', this.resizeHandler);
+        this.containers.forEach(container => container.remove());
         this.tiles = [];
+        this.containers = new Set();
     }
 
     checkDone() {
@@ -120,15 +158,18 @@ export default class Board {
         const newMaxCol = Math.min(c1.maxCol, c2.maxCol);
         const c = new Container(this, [...c1.tiles, ...c2.tiles], newRow, newCol, newMaxRow, newMaxCol, c2.top + ((newRow - c2.row) * this.tileSizeScaled()), c2.left + ((newCol - c2.col) * this.tileSizeScaled()));
         c1.tiles.forEach((tile) => {
-            tile.setContainer(c, (c1.row - newRow) * this.tileSizeScaled(), (c1.col - newCol) * this.tileSizeScaled());
+            tile.setContainer(c, tile.rowInContainer + (c1.row - newRow), tile.colInContainer + (c1.col - newCol));
             c2.tiles.forEach(other => tile.neighbors.delete(other));
         });
         c2.tiles.forEach((tile) => {
-            tile.setContainer(c, (c2.row - newRow) * this.tileSizeScaled(), (c2.col - newCol) * this.tileSizeScaled());
+            tile.setContainer(c, tile.rowInContainer + (c2.row - newRow), tile.colInContainer + (c2.col - newCol));
             c1.tiles.forEach(other => tile.neighbors.delete(other));
         });
         c1.remove();
         c2.remove();
+        this.containers.delete(c1);
+        this.containers.delete(c2);
+        this.containers.add(c);
         this.checkDone();
     }
 
