@@ -15,3 +15,10 @@ export function changeStatus(status) {
         status
     };
 }
+
+export function changeSettings(settings) {
+    return {
+        type: types.JIGSAW_SETTINGS_CHANGE,
+        settings
+    };
+}

@@ -5,7 +5,12 @@ const initialState = {
     dataURL: config.noImage,
     height: 0,
     width: 0,
-    status: gameStatus.INIT
+    status: gameStatus.INIT,
+    settings: {
+        maxRowsCols: 3,
+        audioEnabled: true,
+        audioSrc: 'merge.mp3'
+    }
 };
 
 export default function jigsawReducer(state = initialState, action) {
@@ -20,6 +25,10 @@ export default function jigsawReducer(state = initialState, action) {
         case types.JIGSAW_STATUS_CHANGE:
             return Object.assign({}, state, {
                 status: action.status
+            });
+        case types.JIGSAW_SETTINGS_CHANGE:
+            return Object.assign({}, state, {
+                settings: action.settings
             });
         default:
             return state;

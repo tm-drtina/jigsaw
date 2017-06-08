@@ -13,7 +13,7 @@ import Modal from './modal';
 class Jigsaw extends React.Component {
 
     componentDidMount() {
-        this.board = new Board(this.boardEl, config.audioSrc, () => this.props.changeStatus(gameStatus.RUNNING), () => this.props.changeStatus(gameStatus.DONE));
+        this.board = new Board(this.boardEl, this.props.gameSettings, () => this.props.changeStatus(gameStatus.RUNNING), () => this.props.changeStatus(gameStatus.DONE));
         if (this.props.gameStatus === gameStatus.RUNNING) {
             this.props.changeStatus(gameStatus.LOADED);
             // TODO: load saved state
@@ -21,6 +21,9 @@ class Jigsaw extends React.Component {
     }
 
     componentWillReceiveProps(newProps) {
+        if (this.props.gameSettings !== newProps.gameSettings) {
+            this.board.setSettings(newProps.gameSettings);
+        }
         if (this.props.gameStatus !== newProps.gameStatus) {
             if (newProps.gameStatus === gameStatus.ERROR
                 || newProps.gameStatus === gameStatus.LOADING
@@ -28,7 +31,7 @@ class Jigsaw extends React.Component {
             ) {
                 this.board.removeTiles();
             } else if (newProps.gameStatus === gameStatus.START) {
-                this.board.generateTiles(newProps.imageHeight, newProps.imageWidth, newProps.tilesPerRowCol);
+                this.board.generateTiles(newProps.imageHeight, newProps.imageWidth);
             }
         }
     }
@@ -271,7 +274,11 @@ Jigsaw.propTypes = {
     gameStatus: PropTypes.number.isRequired,
     changeStatus: PropTypes.func.isRequired,
 
-    tilesPerRowCol: PropTypes.number.isRequired,
+    gameSettings: PropTypes.shape({
+        audioEnabled: PropTypes.bool.isRequired,
+        audioSrc: PropTypes.string.isRequired,
+        maxRowsCols: PropTypes.number.isRequired
+    }).isRequired,
 
     image: PropTypes.string.isRequired,
     imageHeight: PropTypes.number.isRequired,

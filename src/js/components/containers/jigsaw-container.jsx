@@ -17,7 +17,7 @@ class JigsawContainer extends React.PureComponent {
                 image={this.props.image}
                 imageHeight={this.props.imageHeight}
                 imageWidth={this.props.imageWidth}
-                tilesPerRowCol={3 /* TODO: set from settings */}
+                gameSettings={this.props.gameSettings}
             />
         );
     }
@@ -29,7 +29,8 @@ JigsawContainer.propTypes = {
     image: PropTypes.string.isRequired,
     imageHeight: PropTypes.number.isRequired,
     imageWidth: PropTypes.number.isRequired,
-    changeFile: PropTypes.func.isRequired
+    changeFile: PropTypes.func.isRequired,
+    gameSettings: PropTypes.shape({}).isRequired
 };
 
 const mapStateToProps = state => ({
@@ -37,7 +38,8 @@ const mapStateToProps = state => ({
     imageHeight: state.jigsaw.height,
     imageWidth: state.jigsaw.width,
     imageValid: state.jigsaw.valid,
-    gameStatus: state.jigsaw.status
+    gameStatus: state.jigsaw.status,
+    gameSettings: state.jigsaw.settings
 });
 
 const mapDispatchToProps = dispatch => ({

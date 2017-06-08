@@ -3,6 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 
 import JigsawContainer from '../containers/jigsaw-container';
 import NavigationContainer from '../containers/navigation-container';
+import SettingsContainer from '../containers/settings-container';
 
 import Modal from '../views/modal';
 import About from '../views/about';
@@ -20,7 +21,7 @@ const MainLayout = withRouter(({ history }) => (
                         path="/settings"
                         render={() => (
                             <Modal title="Settings" onClose={() => history.push('/')}>
-                                <p>Settings not yet implemented.</p>
+                                <SettingsContainer />
                             </Modal>
                         )}
                     />

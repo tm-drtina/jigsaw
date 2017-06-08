@@ -16,7 +16,11 @@ export default class Board {
     tileSizeScaled = () => Math.floor(this.tileSize * this.scale * this.resizeScale);
     tileSizeTotalScaled = () => Math.floor(this.tileSizeTotal * this.scale * this.resizeScale);
 
-    maxRowsCols = 2;
+    settings = {
+        maxRowsCols: 3,
+        audioEnabled: true,
+        audioSrc: ''
+    };
 
     width = 0;
     height = 0;
@@ -33,16 +37,25 @@ export default class Board {
 
     audio = null;
 
-    constructor(el, audioSrc, gameStartedCallback, doneCallback) {
+    constructor(el, settings, gameStartedCallback, doneCallback) {
         this.tiles = [];
         this.containers = new Set();
         this.el = el;
-        try {
-            this.audio = new Audio();
-            this.audio.src = audioSrc;
-        } catch (e) {}
+        this.setSettings(settings);
         this.gameStartedCallback = gameStartedCallback;
         this.doneCallback = doneCallback;
+    }
+
+    setSettings(settings) {
+        this.settings = Object.assign({}, this.settings, settings);
+        try {
+            if (!this.audio) {
+                this.audio = new Audio();
+            }
+            this.audio.src = settings.audioSrc;
+        } catch (e) {
+            this.audio = null;
+        }
     }
 
     resizeHandler = throttle(() => {
@@ -65,12 +78,11 @@ export default class Board {
         this.boardWidth = this.el.clientWidth;
     }, 20);
 
-    generateTiles(imageHeight, imageWidth, maxRowsCols) {
+    generateTiles(imageHeight, imageWidth) {
         if (this.tiles.length > 0) {
             this.removeTiles();
         }
 
-        this.maxRowsCols = maxRowsCols;
         this.boardHeight = this.el.clientHeight;
         this.boardWidth = this.el.clientWidth;
         this.resizeScale = 1;
@@ -90,12 +102,12 @@ export default class Board {
         this.width = imageWidth * scale;
 
         if (this.height > this.width) {
-            this.rows = this.maxRowsCols;
-            this.scale = this.height / (this.maxRowsCols * this.tileSize);
+            this.rows = this.settings.maxRowsCols;
+            this.scale = this.height / (this.settings.maxRowsCols * this.tileSize);
 
             this.cols = 0;
             let patternWidth = 0;
-            while (patternWidth < this.width && this.cols < this.maxRowsCols) {
+            while (patternWidth < this.width && this.cols < this.settings.maxRowsCols) {
                 patternWidth += this.tileSizeScaled();
                 this.cols += 1;
             }
@@ -103,12 +115,12 @@ export default class Board {
             this.leftOffset = Math.floor(((this.cols * this.tileSize) - (this.width / this.scale)) / 2);
             this.topOffset = Math.floor(((this.rows * this.tileSize) - (this.height / this.scale)) / 2);
         } else {
-            this.cols = this.maxRowsCols;
-            this.scale = this.width / (this.maxRowsCols * this.tileSize);
+            this.cols = this.settings.maxRowsCols;
+            this.scale = this.width / (this.settings.maxRowsCols * this.tileSize);
 
             this.rows = 0;
             let patternHeight = 0;
-            while (patternHeight < this.height && this.rows < this.maxRowsCols) {
+            while (patternHeight < this.height && this.rows < this.settings.maxRowsCols) {
                 patternHeight += this.tileSizeScaled();
                 this.rows += 1;
             }
@@ -156,7 +168,7 @@ export default class Board {
     }
 
     mergeComponents(tile1, tile2) {
-        if (this.audio) {
+        if (this.audio && this.settings.audioEnabled) {
             this.audio.play();
         }
         const c1 = tile1.container;

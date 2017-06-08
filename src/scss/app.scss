@@ -5,6 +5,7 @@
 $fa-font-path: "~font-awesome/fonts";
 
 @import "~font-awesome/scss/font-awesome";
+@import "~react-input-range/lib/css/index.css";
 
 html,
 body,
@@ -126,4 +127,33 @@ label[for="file-select"] {
       width: 100%;
     }
   }
+}
+
+.input-range__label {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+}
+
+.input-range__label--value {
+  top: -2.7rem;
+}
+
+.input-range {
+  height: 4rem;
+}
+
+.input-range__label--min,
+.input-range__label--max {
+  bottom: 0;
+  line-height: 1;
+}
+
+input.set-audio-enabled {
+  margin-left: 8px;
+}
+
+.input-range__track--active,
+.input-range__slider {
+  background-color: $brand-primary;
+  border-color: $brand-primary;
 }
