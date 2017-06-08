@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { gameStatus } from '../../config';
 
@@ -20,7 +21,9 @@ const Navigation = props => (
                     <span className="icon-bar" />
                     <span className="icon-bar" />
                 </button>
-                <a className="navbar-brand">Jigsaw</a>
+                <Link className="navbar-brand" to="/">
+                    Jigsaw
+                </Link>
             </div>
 
             <div
@@ -53,6 +56,18 @@ const Navigation = props => (
                             Load image
                             <input ref={(el) => { fileSelect = el; }} id="file-select" type="file" accept="image/*" onChange={props.onFileChange} />
                         </a>
+                    </li>
+                </ul>
+                <ul className="nav navbar-nav navbar-right">
+                    <li>
+                        <Link to="/settings">
+                            Settings
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to="/about">
+                            About
+                        </Link>
                     </li>
                 </ul>
             </div>

@@ -31,10 +31,16 @@ export default class Board {
     // Drag
     zIndexMax = 0;
 
-    constructor(el, gameStartedCallback, doneCallback) {
+    audio = null;
+
+    constructor(el, audioSrc, gameStartedCallback, doneCallback) {
         this.tiles = [];
         this.containers = new Set();
         this.el = el;
+        try {
+            this.audio = new Audio();
+            this.audio.src = audioSrc;
+        } catch (e) {}
         this.gameStartedCallback = gameStartedCallback;
         this.doneCallback = doneCallback;
     }
@@ -150,6 +156,9 @@ export default class Board {
     }
 
     mergeComponents(tile1, tile2) {
+        if (this.audio) {
+            this.audio.play();
+        }
         const c1 = tile1.container;
         const c2 = tile2.container;
         const newRow = Math.min(c1.row, c2.row);

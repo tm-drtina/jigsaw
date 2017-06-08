@@ -13,7 +13,7 @@ import Modal from './modal';
 class Jigsaw extends React.Component {
 
     componentDidMount() {
-        this.board = new Board(this.boardEl, () => this.props.changeStatus(gameStatus.RUNNING), () => this.props.changeStatus(gameStatus.DONE));
+        this.board = new Board(this.boardEl, config.audioSrc, () => this.props.changeStatus(gameStatus.RUNNING), () => this.props.changeStatus(gameStatus.DONE));
         if (this.props.gameStatus === gameStatus.RUNNING) {
             this.props.changeStatus(gameStatus.LOADED);
             // TODO: load saved state
@@ -35,7 +35,7 @@ class Jigsaw extends React.Component {
 
     render() {
         return (
-            <div className="panel panel-default jigsaw">
+            <section className="panel panel-default jigsaw">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -257,10 +257,12 @@ class Jigsaw extends React.Component {
                         <img draggable={false} src={config.noImage} alt="" />
                     }
                     {this.props.gameStatus === gameStatus.DONE &&
-                        <Modal title="Congratulations" text="You've successfully completed this puzzle." onClose={() => this.props.changeStatus(gameStatus.LOADED)} />
+                        <Modal title="Congratulations" onClose={() => this.props.changeStatus(gameStatus.LOADED)}>
+                            <p>You&apos;ve successfully completed this puzzle.</p>
+                        </Modal>
                     }
                 </div>
-            </div>
+            </section>
         );
     }
 }

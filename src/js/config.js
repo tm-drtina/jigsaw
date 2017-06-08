@@ -1,5 +1,6 @@
 export default {
-    noImage: 'no-image.svg'
+    noImage: 'no-image.svg',
+    audioSrc: 'merge.mp3'
 };
 
 export const gameStatus = {

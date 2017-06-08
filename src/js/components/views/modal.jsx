@@ -11,7 +11,7 @@ const Modal = props => (
                         <h4 className="modal-title">{props.title}</h4>
                     </div>
                     <div className="modal-body">
-                        <p>{props.text}</p>
+                        {props.children}
                     </div>
                 </div>
             </div>
@@ -22,7 +22,7 @@ const Modal = props => (
 
 Modal.propTypes = {
     title: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
+    children: PropTypes.element.isRequired,
     onClose: PropTypes.func.isRequired
 };
 

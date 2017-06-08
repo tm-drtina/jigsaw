@@ -21,14 +21,19 @@ body {
 
 .layout-content {
   height: calc(100% - 87px);
+  position: relative;
+
+  > section {
+    height: calc(100% - #{$line-height-computed});
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
-.jigsaw {
-  height: calc(100% - #{$line-height-computed});
-
-  > div {
-    height: 100%;
-  }
+.jigsaw .panel-body {
+  height: 100%;
 }
 
 .loading {
@@ -36,6 +41,8 @@ body {
   position: absolute;
   height: 100%;
   width: 100%;
+  margin-left: -$panel-body-padding;
+  margin-top: -$panel-body-padding;
   background: rgba(128, 128, 128, 0.1);
   top: 0;
   left: 0;
@@ -86,6 +93,27 @@ label[for="file-select"] {
     width: 100%;
     margin-left: -$panel-body-padding;
     margin-top: -$panel-body-padding;
+
+    .modal {
+      display: block;
+    }
+
+    .modal,
+    .modal-backdrop {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+.modal-section {
+  pointer-events: none;
+
+  .modal-wrapper {
+    height: 100%;
+    width: 100%;
+    pointer-events: auto;
 
     .modal {
       display: block;
