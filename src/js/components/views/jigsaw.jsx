@@ -58,10 +58,11 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="1"
-                                strokeDasharray="1, 2"
+                                strokeWidth="2"
+                                strokeDasharray="2, 4"
                                 id="tile-path"
                                 fill="transparent"
+                                style={{ vectorEffect: 'non-scaling-stroke' }}
                             />
                         </clipPath>
                         <clipPath id="tile-top">
@@ -78,10 +79,11 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="1"
-                                strokeDasharray="1, 2"
+                                strokeWidth="2"
+                                strokeDasharray="2, 4"
                                 id="tile-path-top"
                                 fill="transparent"
+                                style={{ vectorEffect: 'non-scaling-stroke' }}
                             />
                         </clipPath>
                         <clipPath id="tile-top-left">
@@ -96,10 +98,11 @@ class Jigsaw extends React.Component {
                                    l -20 0
                                    l 0 -50"
                                 stroke="red"
-                                strokeWidth="1"
-                                strokeDasharray="1, 2"
+                                strokeWidth="2"
+                                strokeDasharray="2, 4"
                                 id="tile-path-top-left"
                                 fill="transparent"
+                                style={{ vectorEffect: 'non-scaling-stroke' }}
                             />
                         </clipPath>
                         <clipPath id="tile-top-right">
@@ -114,10 +117,11 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="1"
-                                strokeDasharray="1, 2"
+                                strokeWidth="2"
+                                strokeDasharray="2, 4"
                                 id="tile-path-top-right"
                                 fill="transparent"
+                                style={{ vectorEffect: 'non-scaling-stroke' }}
                             />
                         </clipPath>
                         <clipPath id="tile-bot">
@@ -134,10 +138,11 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="1"
-                                strokeDasharray="1, 2"
+                                strokeWidth="2"
+                                strokeDasharray="2, 4"
                                 id="tile-path-bot"
                                 fill="transparent"
+                                style={{ vectorEffect: 'non-scaling-stroke' }}
                             />
                         </clipPath>
                         <clipPath id="tile-bot-left">
@@ -152,10 +157,11 @@ class Jigsaw extends React.Component {
                                    l -50 0
                                    l 0 -50"
                                 stroke="red"
-                                strokeWidth="1"
-                                strokeDasharray="1, 2"
+                                strokeWidth="2"
+                                strokeDasharray="2, 4"
                                 id="tile-path-bot-left"
                                 fill="transparent"
+                                style={{ vectorEffect: 'non-scaling-stroke' }}
                             />
                         </clipPath>
                         <clipPath id="tile-bot-right">
@@ -170,10 +176,11 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="1"
-                                strokeDasharray="1, 2"
+                                strokeWidth="2"
+                                strokeDasharray="2, 4"
                                 id="tile-path-bot-right"
                                 fill="transparent"
+                                style={{ vectorEffect: 'non-scaling-stroke' }}
                             />
                         </clipPath>
                         <clipPath id="tile-left">
@@ -190,10 +197,11 @@ class Jigsaw extends React.Component {
                                    l -20 0
                                    l 0 -50"
                                 stroke="red"
-                                strokeWidth="1"
-                                strokeDasharray="1, 2"
+                                strokeWidth="2"
+                                strokeDasharray="2, 4"
                                 id="tile-path-left"
                                 fill="transparent"
+                                style={{ vectorEffect: 'non-scaling-stroke' }}
                             />
                         </clipPath>
                         <clipPath id="tile-right">
@@ -210,10 +218,11 @@ class Jigsaw extends React.Component {
                                    a 8 8 0 1 0 0 -10
                                    l 0 -20"
                                 stroke="red"
-                                strokeWidth="1"
-                                strokeDasharray="1, 2"
+                                strokeWidth="2"
+                                strokeDasharray="2, 4"
                                 id="tile-path-right"
                                 fill="transparent"
+                                style={{ vectorEffect: 'non-scaling-stroke' }}
                             />
                         </clipPath>
                         <pattern id="img1" width="100%" height="100%" patternContentUnits="objectBoundingBox">
