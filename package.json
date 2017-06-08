@@ -1,6 +1,6 @@
 {
   "name": "jigsaw",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Example application showing how to use React and Redux in ToDo application.",
   "main": "webpack.config.js",
   "scripts": {
