@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { checkFileExtension } from '../../utils';
 
 import { changeFile, changeStatus } from '../../actions/jigsaw-actions';
-import { toggleMenu } from '../../actions/navigation-actions';
+import { setMenuOpen } from '../../actions/navigation-actions';
 
 import Navigation from '../views/navigation';
 import { gameStatus } from '../../config';
@@ -49,7 +49,7 @@ class NavigationContainer extends React.PureComponent {
         return (
             <Navigation
                 menuOpen={this.props.menuOpen}
-                toggleMenu={this.props.toggleMenu}
+                setMenuOpen={this.props.setMenuOpen}
                 changeStatus={this.props.changeStatus}
                 startGameDisabled={this.props.gameStatus === gameStatus.INIT || this.props.gameStatus === gameStatus.ERROR}
                 onFileChange={this.handleFileChange}
@@ -60,7 +60,7 @@ class NavigationContainer extends React.PureComponent {
 
 NavigationContainer.propTypes = {
     menuOpen: PropTypes.bool.isRequired,
-    toggleMenu: PropTypes.func.isRequired,
+    setMenuOpen: PropTypes.func.isRequired,
 
     gameStatus: PropTypes.number.isRequired,
 
@@ -76,7 +76,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     changeStatus: status => dispatch(changeStatus(status)),
     changeFile: (file, height, width) => dispatch(changeFile(file, height, width)),
-    toggleMenu: () => dispatch(toggleMenu())
+    setMenuOpen: open => dispatch(setMenuOpen(open))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationContainer);

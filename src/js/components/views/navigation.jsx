@@ -15,7 +15,7 @@ const Navigation = props => (
     <nav className="navbar navbar-default">
         <div className="container-fluid">
             <div className="navbar-header">
-                <button type="button" className="navbar-toggle collapsed" aria-expanded={props.menuOpen} onClick={props.toggleMenu}>
+                <button type="button" className="navbar-toggle collapsed" aria-expanded={props.menuOpen} onClick={() => props.setMenuOpen(!props.menuOpen)}>
                     <span className="sr-only">Toggle navigation</span>
                     <span className="icon-bar" />
                     <span className="icon-bar" />
@@ -38,7 +38,7 @@ const Navigation = props => (
                             tabIndex="0"
                             onClick={() => {
                                 if (!props.startGameDisabled) props.changeStatus(gameStatus.START);
-                                props.toggleMenu();
+                                props.setMenuOpen(false);
                             }}
                         >
                             Start game
@@ -50,7 +50,7 @@ const Navigation = props => (
                             tabIndex="0"
                             onClick={() => {
                                 if (fileSelect) fileSelect.click();
-                                props.toggleMenu();
+                                props.setMenuOpen(false);
                             }}
                         >
                             Load image
@@ -60,12 +60,12 @@ const Navigation = props => (
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
                     <li>
-                        <Link to="/settings">
+                        <Link to="/settings" onClick={() => props.setMenuOpen(false)}>
                             Settings
                         </Link>
                     </li>
                     <li>
-                        <Link to="/about">
+                        <Link to="/about" onClick={() => props.setMenuOpen(false)}>
                             About
                         </Link>
                     </li>
@@ -77,7 +77,7 @@ const Navigation = props => (
 
 Navigation.propTypes = {
     menuOpen: PropTypes.bool.isRequired,
-    toggleMenu: PropTypes.func.isRequired,
+    setMenuOpen: PropTypes.func.isRequired,
 
     changeStatus: PropTypes.func.isRequired,
     startGameDisabled: PropTypes.bool.isRequired,

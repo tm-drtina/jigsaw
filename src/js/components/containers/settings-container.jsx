@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { changeSettings } from '../../actions/jigsaw-actions';
 
@@ -27,6 +28,7 @@ class SettingsContainer extends React.PureComponent {
     saveSettings = (event) => {
         event.preventDefault();
         this.props.changeSettings(this.state.settings);
+        this.props.history.push('/');
     };
 
     render() {
@@ -42,7 +44,10 @@ class SettingsContainer extends React.PureComponent {
 
 SettingsContainer.propTypes = {
     settings: PropTypes.shape({}).isRequired,
-    changeSettings: PropTypes.func.isRequired
+    changeSettings: PropTypes.func.isRequired,
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    }).isRequired
 };
 
 const mapStateToProps = state => ({
@@ -53,5 +58,5 @@ const mapDispatchToProps = dispatch => ({
     changeSettings: settings => dispatch(changeSettings(settings))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsContainer);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SettingsContainer));
 export const undecorated = SettingsContainer;
