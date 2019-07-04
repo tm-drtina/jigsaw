@@ -18,7 +18,9 @@
     "lint": "npm run lint:js & npm run lint:css",
     "test": "npm run jest & npm run lint",
     "version": "node update-version.js && npm run production && git add dist/*",
-    "postversion": "git subtree push --prefix dist origin gh-pages"
+    "postversion": "git subtree push --prefix dist origin gh-pages",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "Tomas Drtina <drtinto1@fel.cvut.cz>",
   "license": "MIT",
@@ -44,7 +46,8 @@
     "stylelint-config-standard": "^16.0.0",
     "stylelint-webpack-plugin": "^0.7.0",
     "superagent": "^3.5.2",
-    "webpack": "^2.4.1"
+    "webpack": "^2.4.1",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -79,5 +82,6 @@
     "rimraf": "^2.6.1",
     "sass-loader": "^6.0.3",
     "webpack-dev-server": "^2.4.5"
-  }
+  },
+  "snyk": true
 }
