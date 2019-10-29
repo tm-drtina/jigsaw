@@ -62,7 +62,7 @@
     "bootswatch": "^3.3.7",
     "cross-env": "^5.0.0",
     "css-loader": "^0.28.0",
-    "eslint": "^3.19.0",
+    "eslint": "^4.19.1",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-loader": "^1.7.1",
     "eslint-plugin-import": "^2.2.0",
