@@ -1,0 +1,42 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.14.1
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - enzyme > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - redux > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - extract-text-webpack-plugin > async > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - webpack > async > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - react-hot-loader > react-proxy > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint > doiuse > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint > postcss-reporter > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint > table > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint-webpack-plugin > stylelint > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint > colorguard > postcss-reporter > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint > stylehacks > postcss-reporter > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint-webpack-plugin > stylelint > doiuse > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint-webpack-plugin > stylelint > postcss-reporter > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint-webpack-plugin > stylelint > table > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint-webpack-plugin > stylelint > colorguard > postcss-reporter > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
+    - stylelint-webpack-plugin > stylelint > stylehacks > postcss-reporter > lodash:
+        patched: '2020-05-01T07:53:19.169Z'
